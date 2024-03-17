@@ -16,7 +16,6 @@ export interface UserFields {
     token: string;
     role: string;
     displayName?: string;
-    googleId?: string;
 }
 
 interface UserMethods {

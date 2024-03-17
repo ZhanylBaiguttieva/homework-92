@@ -1,6 +1,7 @@
 import {Router} from "express";
 import mongoose from "mongoose";
 import User from "../models/User";
+import {UserFields} from "../types";
 
 const usersRouter = Router();
 
@@ -42,6 +43,18 @@ usersRouter.post('/sessions', async (req, res, next) => {
         next(e);
     }
 });
+
+export const checkToken = async (token: string) => {
+    const user = await User.findOne({token: token});
+
+    return  {
+        email: user?.email,
+        displayName: user?.displayName,
+        token: user?.token,
+        role: user?.role,
+        password: user?.password,
+    } as UserFields;
+};
 
 usersRouter.delete('/sessions', async (req, res, next) => {
     try {
