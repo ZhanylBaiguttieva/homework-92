@@ -18,6 +18,7 @@ const MessageSchema = new Schema({
         type: String,
         required: true,
     },
+    datetime: Date,
 });
 
 const Message = model('Message', MessageSchema);

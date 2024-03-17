@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import config from './config';
 import usersRouter, {checkToken} from "./routers/users";
 import {ActiveConnections, IncomingMessage, UserFields} from "./types";
+import messagesRouter from "./routers/messages";
 
 const app = express();
 expressWs(app);
@@ -49,6 +50,7 @@ router.ws('/chat', (ws, req) => {
 
 app.use(router);
 app.use('/users', usersRouter);
+app.use('/messages', messagesRouter);
 const run = async () => {
     await mongoose.connect(config.mongoose.db);
 
