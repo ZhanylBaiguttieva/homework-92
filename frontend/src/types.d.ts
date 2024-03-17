@@ -35,3 +35,16 @@ export interface RegisterResponse {
 export  interface GlobalError {
   error: string;
 }
+
+export  interface ChatMessage {
+  user: string;
+  message: string;
+}
+
+export interface IncomingChatMessage {
+  type: "NEW_MESSAGE";
+  payload: ChatMessage;
+}
+
+
+export type IncomingMessage = IncomingChatMessage;

@@ -37,7 +37,7 @@ const Register = () => {
     event.preventDefault();
     try {
       await dispatch(register(state)).unwrap();
-      navigate('/');
+      navigate('/chatRoom');
     } catch(e) {
 
     }
@@ -93,7 +93,7 @@ const Register = () => {
                 label="Name"
                 type="displayName"
                 autoComplete="new-displayName"
-                value={state.password}
+                value={state.displayName}
                 onChange={inputChangeHandler}
                 error={Boolean(getFieldError('displayName'))}
                 helperText={getFieldError('displayName')}
