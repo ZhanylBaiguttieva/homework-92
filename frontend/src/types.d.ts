@@ -41,6 +41,11 @@ export  interface ChatMessage {
   message: string;
 }
 
+export interface Message {
+  user: User;
+  text: string;
+  datetime: string;
+}
 export interface IncomingChatMessage {
   type: "NEW_MESSAGE";
   payload: ChatMessage;
