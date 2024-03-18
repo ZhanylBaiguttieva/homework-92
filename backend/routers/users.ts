@@ -11,6 +11,7 @@ usersRouter.post('/', async (req, res, next) => {
             email: req.body.email,
             password: req.body.password,
             displayName: req.body.displayName,
+            isActive: true,
         });
         user.generateToken();
         await user.save();
@@ -36,6 +37,7 @@ usersRouter.post('/sessions', async (req, res, next) => {
             return res.status(422).send({ error: 'Password is wrong' });
         }
         user.generateToken();
+        user.isActive = true;
         await user.save();
 
         return res.send({ message: 'Email and password are correct!', user });
@@ -44,17 +46,6 @@ usersRouter.post('/sessions', async (req, res, next) => {
     }
 });
 
-export const checkToken = async (token: string) => {
-    const user = await User.findOne({token: token});
-
-    return  {
-        email: user?.email,
-        displayName: user?.displayName,
-        token: user?.token,
-        role: user?.role,
-        password: user?.password,
-    } as UserFields;
-};
 
 usersRouter.delete('/sessions', async (req, res, next) => {
     try {
@@ -77,6 +68,7 @@ usersRouter.delete('/sessions', async (req, res, next) => {
         }
 
         user.generateToken();
+        user.isActive = false;
         await user.save();
 
         return res.send({ ...successMessage, stage: 'Success' });
