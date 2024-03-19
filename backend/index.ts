@@ -42,8 +42,9 @@ router.ws('/chat', (ws, req) => {
                 const outgoingMsg = {
                     type: 'NEW_MESSAGE',
                     payload: {
-                        user: user.displayName,
-                        message: parsedMessage.payload,
+                        user: user,
+                        text: parsedMessage.payload,
+                        datetime: new Date(),
                     }};
                 connection.send(JSON.stringify(outgoingMsg));
             });

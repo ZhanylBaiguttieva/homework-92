@@ -37,11 +37,11 @@ interface ChatMessage {
     message: string;
 }
 export const saveMessage = async(chatMessage: ChatMessage) => {
-    const user = await User.findOne({user:chatMessage.user});
+    const user = await User.findOne({token: chatMessage.user.token});
     if(!user) return;
     const newMessage = new Message({
-        user: user.displayName,
-        message: chatMessage.message,
+        user: user._id,
+        text: chatMessage.message,
         datetime: new Date(),
     });
     await newMessage.save();
