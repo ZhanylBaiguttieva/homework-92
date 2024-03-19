@@ -1,7 +1,6 @@
 import {Router} from "express";
 import mongoose from "mongoose";
 import User from "../models/User";
-import {UserFields} from "../types";
 
 const usersRouter = Router();
 

@@ -1,5 +1,5 @@
 import { User } from '../../../types';
-import { Avatar, Grid, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material';
+import { Avatar, Grid, List, ListItem, ListItemAvatar, ListItemText, Paper, Typography } from '@mui/material';
 import React from 'react';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 const UsersActive: React.FC<Props> = ({user}) => {
 
   return (
-    <Grid container>
+    <Paper elevation={6} variant="elevation" square={false}>
       <List>
         <ListItem>
           <ListItemAvatar>
@@ -26,7 +26,7 @@ const UsersActive: React.FC<Props> = ({user}) => {
           </Grid>
         </ListItem>
       </List>
-    </Grid>
+    </Paper>
   );
 };
 

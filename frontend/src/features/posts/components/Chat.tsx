@@ -13,16 +13,18 @@ const Chat = () => {
   const [activeUsers, setActiveUsers] = useState<User[]>([]);
 
   const user = useAppSelector(selectUser);
-  const changeMessage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMessageText(e.target.value);
-  }
   const ws  = useRef<WebSocket | null>(null);
 
-  useEffect(() => {
+  const connect = () => {
     ws.current = new WebSocket('ws://localhost:8000/chat');
-    ws.current.addEventListener('close', () => console.log('ws closed'));
     ws.current.addEventListener('open', () => {
       ws.current?.send(JSON.stringify({type: 'LOGIN', payload: user?.token}));
+    });
+    ws.current.addEventListener('close', () => {
+      const intervalId = setInterval(connect,3000);
+      if(!user) {
+       clearInterval(intervalId);
+      }
     });
 
     ws.current.addEventListener('message', (event) => {
@@ -32,12 +34,14 @@ const Chat = () => {
         setMessages(prev => [...prev, decodeMessage.payload]);
       }
       if(decodeMessage.type === 'LAST_UPDATES') {
-        console.log(decodeMessage.payload);
         setLastMessages(decodeMessage.payload.messages);
         setActiveUsers(decodeMessage.payload.activeUsers);
       }
-
     });
+  };
+
+  useEffect(() => {
+    connect();
 
     return () => {
       if(ws.current) {
@@ -52,6 +56,9 @@ const Chat = () => {
     ws.current.send(JSON.stringify({type: 'SEND_MESSAGE', payload: messageText}));
     setMessageText('');
   };
+  const changeMessage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMessageText(e.target.value);
+  }
 
 
   return (

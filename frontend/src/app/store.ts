@@ -2,7 +2,6 @@ import storage from 'redux-persist/lib/storage';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { usersReducer } from '../features/users/usersSlice.ts';
 import {persistReducer, FLUSH, PAUSE, PERSIST, REHYDRATE, PURGE, REGISTER, persistStore } from "redux-persist";
-import { messagesReducer } from '../features/posts/messagesSlice.ts';
 
 const usersPersistConfig = {
   key:'chatRoom:users',
@@ -12,7 +11,6 @@ const usersPersistConfig = {
 
 const rootReducer = combineReducers({
   users: persistReducer (usersPersistConfig, usersReducer),
-  messages: messagesReducer,
 });
 export const store = configureStore({
   reducer: rootReducer,
