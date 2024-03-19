@@ -36,20 +36,24 @@ export  interface GlobalError {
   error: string;
 }
 
-export  interface ChatMessage {
-  user: string;
-  message: string;
-}
-
 export interface Message {
+  _id: string;
   user: User;
   text: string;
   datetime: string;
 }
 export interface IncomingChatMessage {
   type: "NEW_MESSAGE";
-  payload: ChatMessage;
+  payload: Message;
 }
 
+export interface Updates{
+  activeUsers: User[];
+  messages: Message[];
+}
+export interface IncomingUpdates {
+  type: "LAST_UPDATES";
+  payload: Updates;
+}
 
-export type IncomingMessage = IncomingChatMessage;
+export type IncomingMessage = IncomingChatMessage | IncomingUpdates;
